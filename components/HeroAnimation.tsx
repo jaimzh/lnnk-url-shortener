@@ -1,20 +1,22 @@
 "use client";
 
-import React, { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { useHeroContext } from "@/context/HeroContext";
 
 export default function HeroAnimation() {
-  const [isShortened, setIsShortened] = useState(false);
+  const { isHeroShortened, setIsHeroShortened } = useHeroContext();
 
   return (
     <div
-      className={`container-anim group cursor-pointer text-center select-none transition-all duration-700 ${isShortened ? "shortened" : ""}`}
-      onClick={() => setIsShortened(!isShortened)}
+      className={`mb-8 container-anim group cursor-pointer text-center select-none transition-all duration-700 ${isHeroShortened ? "shortened" : ""}`}
+      onClick={() => setIsHeroShortened(!isHeroShortened)}
     >
-
-        <div className="hint mt-4  text-text-muted/30 text-[10px] uppercase tracking-[0.3em] font-medium transition-colors group-hover:text-text-muted/60 ">
-        {isShortened ? "" : "Ayyy yo that's a"}
+      {/* Top Hint */}
+      <div className="hint mt-4 text-text-muted/60 text-[10px] uppercase tracking-[0.3em] font-medium transition-colors ">
+        {!isHeroShortened && "Ayyy yo that's a"}
       </div>
       <div className="url-box relative flex items-center justify-center whitespace-nowrap tracking-wide">
+        <div className="pulse-glow" aria-hidden="true" />
         <span className="char-lnk">l</span>
         <span className="char-filler">ooo</span>
         <span className="char-lnk">n</span>
@@ -23,8 +25,31 @@ export default function HeroAnimation() {
         <span className="dot"></span>
       </div>
 
-      <div className="hint mt-4  text-text-muted/30 text-[10px] uppercase tracking-[0.3em] font-medium transition-colors group-hover:text-text-muted/60 animate-pulse">
-        {isShortened ? "Click to expand" : "Click to shorten"}
+      {/* Bottom Logic: Separate elements for different styles */}
+      <div className="min-h-6 flex items-center justify-center">
+        <AnimatePresence mode="wait">
+          {!isHeroShortened ? (
+            <motion.p
+              key="hint"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="animate-pulse text-text-muted/30 text-[10px] uppercase tracking-[0.3em] font-medium transition-colors group-hover:text-text-muted/60"
+            >
+              Click to shorten
+            </motion.p>
+          ) : (
+            <motion.p
+              key="tagline"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
+              className="text-text-muted/60 text-sm md:text-base font-light tracking-wide max-w-lg leading-relaxed"
+            >
+              Turn long URLs into short, shareable links in seconds.
+            </motion.p>
+          )}
+        </AnimatePresence>
       </div>
 
       <style>{`
@@ -36,7 +61,7 @@ export default function HeroAnimation() {
         .char-lnk {
           display: inline-block;
           transition: all 0.8s cubic-bezier(0.68, -0.6, 0.32, 1.6);
-          color: #666;
+          color: var(--text-muted);
         }
 
         .char-filler {
@@ -45,7 +70,7 @@ export default function HeroAnimation() {
           opacity: 1;
           filter: blur(0px);
           transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-          color: #666;
+          color: var(--text-muted);
         }
 
         .shortened .char-filler {
@@ -60,6 +85,7 @@ export default function HeroAnimation() {
           font-size: clamp(4rem, 20vw, 8.5rem);
           letter-spacing: -0.05em;
           color: #ffffff;
+          z-index: 1;
         }
 
         .dot {
@@ -79,6 +105,30 @@ export default function HeroAnimation() {
           margin-left: 0.05em;
           transform: translateY(0.12em);
         }
+
+        .pulse-glow {
+          position: absolute;
+          width: 80vw;
+          height: 80vh;
+          background:var(--accent);
+          filter: blur(100px);
+          border-radius: 50%;
+          opacity: 0;
+          transform: scale(0.8);
+          transition: opacity 1s ease;
+          pointer-events: none;
+          z-index: 0;
+        }
+.shortened .pulse-glow {
+          opacity: 0.25;
+          animation: glow-pulse 5s infinite ease-in-out;
+        }
+
+        @keyframes glow-pulse {
+          0%, 100% { transform: scale(1); opacity: 0; }
+          50% { transform: scale(1); opacity: 0; }
+        }
+
 
         @media (max-width: 768px) {
           .shortened .char-lnk {

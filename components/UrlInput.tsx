@@ -1,20 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
-import { Link2, ArrowRight } from "lucide-react";
+import React, { useState, useRef } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { Link2, ArrowRight, ClipboardPaste } from "lucide-react";
 
 type UrlInputProps = {
   onShorten?: (url: string) => void | Promise<void>;
-  tagline?: string;
   className?: string;
 };
 
-export default function UrlInput({
-  onShorten,
-  tagline = "Precision • Analytics • Privacy",
-  className = "",
-}: UrlInputProps) {
+export default function UrlInput({ onShorten, className = "" }: UrlInputProps) {
   const [url, setUrl] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleShorten = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -23,50 +20,86 @@ export default function UrlInput({
 
     if (onShorten) await onShorten(trimmed);
     else console.log("Shortening:", trimmed);
+
+    try {
+      const response = await fetch("/api/shorten", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ url: trimmed }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to shorten URL");
+      }
+
+      const data = await response.json();
+      console.log("Success:", data);
+      setUrl("");
+    } catch (error) {
+      console.error("Failed to shorten URL:", error);
+      // TODO: Show error message to user
+    }
+  };
+
+  const handlePaste = async () => {
+    const copiedText = await navigator.clipboard.readText();
+    try {
+      if (copiedText) {
+        setUrl(copiedText);
+        inputRef.current?.focus();
+      }
+    } catch (error) {
+      console.error("Failed to read clipboard:", error);
+    }
   };
 
   return (
-    <div className={`relative w-full max-w-3xl ${className}`}>
-      <div className="pointer-events-none absolute inset-0 rounded-full bg-accent/5 blur-3xl -z-10" />
-
-      <div className="group flex items-center justify-between h-14 md:h-20 w-full rounded-full border border-white/5 bg-white/3 backdrop-blur-2xl transition-all focus-within:border-accent/40 shadow-2xl p-1 md:p-2 relative focus-within:">
+    <div className={`relative w-full max-w-3xl mx-auto ${className}`}>
+      <div className="group relative flex items-center h-12 md:h-16 w-full rounded-full border border-border/20 bg-bg-light/10 backdrop-blur-sm transition-all duration-300 ease-in-out focus-within:border-accent/40 focus-within:bg-bg-light/20 p-1 md:p-1.5">
         <form
           onSubmit={handleShorten}
           className="flex items-center w-full h-full"
         >
-          <div className="flex items-center flex-1 pl-3.5 md:pl-6 pr-2 md:pr-4 gap-2.5 md:gap-4 min-w-0">
-            <Link2
-              size={16}
-              strokeWidth={1.5}
-              className="shrink-0 text-text-muted transition-colors group-focus-within:text-accent md:w-5 md:h-5"
-            />
+          <div className="flex items-center flex-1 pl-4 md:pl-6 pr-2 md:pr-4 gap-3 md:gap-4 min-w-0">
+            <motion.button
+              type="button"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={handlePaste}
+              className="shrink-0 text-text-muted hover:text-accent transition-colors p-1 cursor-pointer"
+              title="Paste from clipboard"
+            >
+              <ClipboardPaste
+                size={18}
+                strokeWidth={1.5}
+                className="md:w-5 md:h-5"
+              />
+            </motion.button>
+
             <input
+              ref={inputRef}
               type="text"
               value={url}
+              required
               onChange={(e) => setUrl(e.target.value)}
-              placeholder="Enter the link here"
-              aria-label="URL input"
-              className="w-full min-w-0 bg-transparent text-text-base placeholder:text-white/20 outline-none text-sm md:text-lg font-light tracking-wide"
+              placeholder="Drop your long link here..."
+              className="w-full bg-transparent text-text-base placeholder:text-text-muted/20 outline-none text-sm md:text-base font-light tracking-wide py-1 caret-accent"
             />
           </div>
 
           <button
             type="submit"
-            className="h-full px-4 md:px-8 bg-accent hover:brightness-110 active:scale-[0.98] text-text-base font-bold rounded-full transition-all shadow-[0_0_40px_-5px_rgba(147,3,46,0.4)] whitespace-nowrap text-lg cursor-pointer flex items-center justify-center min-w-[48px] md:min-w-0"
+            disabled={!url.trim()}
+            className="h-full px-2 md:px-4 bg-accent hover:brightness-110 active:scale-95 text-text-base  rounded-full transition-all flex items-center justify-center min-w-[40px] md:min-w-[140px] gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <span className="hidden md:block">Get Link!</span>
-            <ArrowRight
-              size={18}
-              className="md:hidden block"
-              strokeWidth={2.5}
-            />
+            <span className="hidden md:block text-sm uppercase">Shorten</span>
+            <ArrowRight size={14} strokeWidth={2.5} />
           </button>
         </form>
       </div>
-
-      <p className="mt-6 md:mt-8 text-center text-text-muted/40 text-[9px] md:text-[10px] font-medium tracking-[0.3em] md:tracking-[0.4em] uppercase">
-        {tagline}
-      </p>
     </div>
   );
 }

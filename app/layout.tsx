@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Ubuntu } from "next/font/google";
 import "./globals.css";
+import { HeroProvider } from "@/context/HeroContext";
+import BrownianParticles from "@/components/BrownianParticles";
 
 const ubuntu = Ubuntu({
   subsets: ["latin"],
@@ -21,7 +23,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${ubuntu.variable} font-sans antialiased`}>
-        {children}
+        <HeroProvider>
+          <BrownianParticles />
+          {children}
+        </HeroProvider>
       </body>
     </html>
   );

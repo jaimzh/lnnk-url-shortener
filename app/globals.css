@@ -8,7 +8,7 @@
   --text-base: hsl(0, 0%, 95%);
   --text-muted: hsl(0, 0%, 70%);
 
-  --accent: #93032e;
+  --accent: hsl(342, 96%, 29%);
 
   --border: hsl(0, 0%, 30%);
 }
