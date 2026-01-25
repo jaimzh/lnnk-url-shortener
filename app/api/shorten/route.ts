@@ -1,74 +1,32 @@
-// import { NextRequest, NextResponse } from "next/server";
-// import { nanoid } from "nanoid";
-// import prisma from "@/lib/prisma";
+import dbConnect from "@/lib/db";
+import { NextRequest } from "next/server";
+import { nanoid } from "nanoid";
+import { Url } from "@/models/UrlSchema";
 
-// export async function POST(request: NextRequest) {
-//   try {
-//     const { url } = await request.json();
-//     const trimmed = typeof url === "string" ? url.trim() : "";
+export async function POST(request: NextRequest) {
+  try {
+    await dbConnect();
+    const data = await request.json();
+    const originalUrl = data.url;
+    if (!originalUrl) {
+      return new Response("URL is required", { status: 400 });
+    }
+    const shortCode = nanoid(6);
 
-//     if (!trimmed) {
-//       return NextResponse.json({ error: "URL is required" }, { status: 400 });
-//     }
+    await Url.create({
+      originalUrl,
+      shortCode,
+    });
 
-//     const shortCode = nanoid(8);
-
-//     const shortenedUrl = await prisma.url.create({
-//       data: { originalUrl: trimmed, shortCode },
-//     });
-
-//     return NextResponse.json({
-//       message: "URL shortened successfully",
-//       shortCode: shortenedUrl.shortCode,
-//       originalUrl: shortenedUrl.originalUrl,
-//     });
-//   } catch (error) {
-//     console.error("Error shortening URL:", error);
-//     return NextResponse.json({ error: "Failed to shorten URL" }, { status: 500 });
-//   }
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-// // export async function POST(request: NextRequest) {
-// //   try {
-// //     const { trimmed } = await request.json();
-
-// //     if (!trimmed) {
-// //       return NextResponse.json({ error: "URL is required" }, { status: 400 });
-// //     }
-
-// //     const shortCode = nanoid(8);
-// //     const shortenedUrl = await prisma.url.create({
-// //       data: {
-// //         originalUrl: trimmed,
-// //         shortCode,
-// //       },
-// //     });
-
-// //     return NextResponse.json({
-// //       message: "URL shortened successfully",
-// //       shortCode: shortenedUrl.shortCode,
-// //       originalUrl: trimmed,
-// //     });
-// //   } catch (error) {
-// //     console.error("Error shortening URL:", error);
-// //     return NextResponse.json(
-// //       { error: "Failed to shorten URL" },
-// //       { status: 500 },
-// //     );
-// //   }
-// // }
-
-
-
-
+    return new Response(
+      JSON.stringify({
+        originalUrl, 
+        shortUrl: `${process.env.BASE_URL}/${shortCode}`,
+      }),
+      { status: 201 },
+    );
+  } catch (error) {
+    console.error("Error shortening URL:", error);
+    return new Response("Failed to shorten URL", { status: 500 });
+  }
+}

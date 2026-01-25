@@ -1,6 +1,8 @@
 import { Link2, CopyIcon, EyeIcon } from "lucide-react";
 import Link from "next/link";
 
+import { Button } from "@/components/ui/button";
+
 export function UrlList() {
   return (
     <div>
@@ -12,9 +14,9 @@ export function UrlList() {
           </Link>
 
           <div className="flex items-center gap-4">
-            <button>
+            <Button variant="ghost" size="icon">
               <CopyIcon />
-            </button>
+            </Button>
 
             <span className="flex items-center gap-2">
               <EyeIcon />

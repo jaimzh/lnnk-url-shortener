@@ -16,7 +16,7 @@ export default function HeroAnimation() {
         {!isHeroShortened && "Ayyy yo that's a"}
       </div>
       <div className="url-box relative flex items-center justify-center whitespace-nowrap tracking-wide">
-        <div className="pulse-glow" aria-hidden="true" />
+        <div className="ambient-glow" aria-hidden="true" />
         <span className="char-lnk">l</span>
         <span className="char-filler">ooo</span>
         <span className="char-lnk">n</span>
@@ -34,9 +34,9 @@ export default function HeroAnimation() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="animate-pulse text-text-muted/30 text-[10px] uppercase tracking-[0.3em] font-medium transition-colors group-hover:text-text-muted/60"
+              className="text-text-muted/60 text-sm md:text-base font-light tracking-wide max-w-lg leading-relaxed mt-3"
             >
-              Click to shorten
+             Turn long URLs into short, shareable links in seconds.
             </motion.p>
           ) : (
             <motion.p
@@ -62,6 +62,7 @@ export default function HeroAnimation() {
           display: inline-block;
           transition: all 0.8s cubic-bezier(0.68, -0.6, 0.32, 1.6);
           color: var(--text-muted);
+          z-index: 1;
         }
 
         .char-filler {
@@ -100,37 +101,33 @@ export default function HeroAnimation() {
         }
 
         .shortened .dot {
-          width: clamp(20px, 8vw, 34px);
-          height: clamp(20px, 8vw, 34px);
+          width: clamp(20px, 4vw, 34px);
+          height: clamp(20px, 4vw, 34px);
           margin-left: 0.05em;
-          transform: translateY(0.12em);
+          transform: translateY(0.16em);
+          
         }
 
-        .pulse-glow {
+        .ambient-glow {
           position: absolute;
-          width: 80vw;
-          height: 80vh;
-          background:var(--accent);
-          filter: blur(100px);
+          width: 140%;
+          height: 140%;
+          background: radial-gradient(circle at center, var(--accent) 0%, transparent 70%);
+          filter: blur(80px);
           border-radius: 50%;
-          opacity: 0;
-          transform: scale(0.8);
-          transition: opacity 1s ease;
+          opacity: 30;
+          transform: scale(0.9);
+          transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
           pointer-events: none;
           z-index: 0;
         }
-.shortened .pulse-glow {
-          opacity: 0.25;
-          animation: glow-pulse 5s infinite ease-in-out;
+
+        .shortened .ambient-glow {
+          opacity: 0.9;
+          transform: scale(1);
         }
 
-        @keyframes glow-pulse {
-          0%, 100% { transform: scale(1); opacity: 0; }
-          50% { transform: scale(1); opacity: 0; }
-        }
-
-
-        @media (max-width: 768px) {
+        @media (max-widt: 768px) {
           .shortened .char-lnk {
             font-size: clamp(4rem, 18vw, 6rem);
             letter-spacing: -0.04em;
