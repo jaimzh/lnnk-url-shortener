@@ -89,6 +89,7 @@
   --color-text-base: var(--custom-text-base);
   --color-text-muted: var(--custom-text-muted);
 
+
   /* Standard Tailwind Overrides */
   --color-background: var(--background);
   --color-foreground: var(--foreground);

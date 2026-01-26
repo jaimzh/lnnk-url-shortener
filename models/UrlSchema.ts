@@ -15,4 +15,13 @@ export const Url = models.Url || model('Url', UrlSchema);
 
 
 
+ export interface UrlDoc {
+    _id: unknown;
+    shortCode: string;
+    originalUrl: string;
+    clicks: number;
+    createdAt: Date;
+  }
+
+
 
