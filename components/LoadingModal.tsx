@@ -29,6 +29,7 @@ export default function LoadingModal({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          onClick={onClose}
           className="fixed inset-0 z-50 flex items-center justify-center bg-bg-base/80 backdrop-blur-md p-4"
         >
           <div className="relative w-full max-w-md">
@@ -36,6 +37,8 @@ export default function LoadingModal({
               {isLoading ? (
                 <LoadingSpinner key="loading" />
               ) : result ? (
+
+                
                 <UrlCard key="success" result={result} onClose={onClose} />
               ) : null}
             </AnimatePresence>

@@ -1,8 +1,8 @@
 "use client";
 
 import { QrCode } from "lucide-react";
-import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import { useState } from "react";
 import UrlCard from "./url-card";
 
 interface QrCellProps {
@@ -10,8 +10,8 @@ interface QrCellProps {
   shortUrl: string;
 }
 
-export function QrCellx({ originalUrl, shortUrl }: QrCellProps) {
-  const [isOpen, setIsOpen] = useState(false);
+export function QrCell({ originalUrl, shortUrl }: QrCellProps) {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
     <div className="flex items-center justify-center w-full px-4">
@@ -25,8 +25,7 @@ export function QrCellx({ originalUrl, shortUrl }: QrCellProps) {
 
       <AnimatePresence>
         {isOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            {/* Backdrop */}
+          <div className="fixed inset-0 z-50 flex items-center justify-center">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -34,14 +33,12 @@ export function QrCellx({ originalUrl, shortUrl }: QrCellProps) {
               onClick={() => setIsOpen(false)}
               className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             />
-            {/* Modal Content */}
-            <div className="z-10 w-full flex justify-center pointer-events-none">
-              <div className="pointer-events-auto">
-                <UrlCard
-                  result={{ originalUrl, shortUrl }}
-                  onClose={() => setIsOpen(false)}
-                />
-              </div>
+
+            <div className="relative z-10">
+              <UrlCard
+                result={{ originalUrl, shortUrl }}
+                onClose={() => setIsOpen(false)}
+              />
             </div>
           </div>
         )}
@@ -49,6 +46,3 @@ export function QrCellx({ originalUrl, shortUrl }: QrCellProps) {
     </div>
   );
 }
-
-
-

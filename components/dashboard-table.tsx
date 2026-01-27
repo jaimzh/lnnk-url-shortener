@@ -12,6 +12,8 @@ import { CopyCell } from "./copy-cell";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { headers } from "next/headers";
+import { QrCode } from "lucide-react";
+import { QrCell } from "./qr-cell";
 
 const formatDate = (date: Date) => {
   return new Date(date).toLocaleDateString("en-US", {
@@ -27,13 +29,11 @@ type DashboardTableProps = {
 };
 
 export async function DashboardTable(props: DashboardTableProps) {
+  const headerList = await headers();
+  const host = headerList.get("host");
+  const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
 
-const headerList = await headers();
-const host = headerList.get('host');
-const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-  
- const baseUrl = `${protocol}://${host}`;
-
+  const baseUrl = `${protocol}://${host}`;
 
   await dbConnect();
 
@@ -57,9 +57,12 @@ const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
       <div className="rounded-xl border border-border overflow-hidden bg-card shadow-sm">
         <Table className="w-auto  min-w-[600px]">
           <TableHeader>
-            <TableRow className="hover:bg-transparent border-b">
+            <TableRow className="hover:bg-accent/20 bg-accent/20 border-b">
               <TableHead className="px-10 text-center font-bold">
                 Link
+              </TableHead>
+              <TableHead className="px-10 text-center font-bold">
+                QR Code
               </TableHead>
               <TableHead className="px-10 text-center font-bold">
                 Clicks
@@ -90,6 +93,15 @@ const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
                     <TableCell>
                       <div className="flex items-center justify-center w-full px-4">
                         <CopyCell text={fullShortLink} />
+                      </div>
+                    </TableCell>
+
+                    <TableCell>
+                      {/* I NEED TO MAKE SURE IT SHOWS THE url codde card */}
+                      <div className="flex items-center justify-center w-full px-4">
+
+
+                       <QrCell originalUrl={url.originalUrl} shortUrl={fullShortLink} />
                       </div>
                     </TableCell>
 

@@ -2,8 +2,17 @@ import dbConnect from "@/lib/db";
 import { NextRequest } from "next/server";
 import { nanoid } from "nanoid";
 import { Url } from "@/models/UrlSchema";
+import { headers } from "next/headers";
 
 export async function POST(request: NextRequest) {
+
+
+const headerList = await headers();
+const host = headerList.get('host');
+const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
+  
+ const baseUrl = `${protocol}://${host}`;
+  
   try {
     await dbConnect();
     const data = await request.json();
@@ -21,7 +30,7 @@ export async function POST(request: NextRequest) {
     return new Response(
       JSON.stringify({
         originalUrl, 
-        shortUrl: `${process.env.BASE_URL}/${shortCode}`,
+        shortUrl: `${baseUrl}/${shortCode}`,
       }),
       { status: 201 },
     );

@@ -7,7 +7,7 @@ import { QRCodeCanvas } from "qrcode.react";
 
 import { Button } from "@/components/ui/button";
 
-interface SuccessCardProps {
+interface UrlCardProps {
   result: {
     originalUrl: string;
     shortUrl: string;
@@ -15,7 +15,7 @@ interface SuccessCardProps {
   onClose: () => void;
 }
 
-export default function UrlCard({ result, onClose }: SuccessCardProps) {
+export default function UrlCard({ result, onClose }: UrlCardProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
