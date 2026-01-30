@@ -36,11 +36,16 @@ export default function UrlCard({ result, onClose }: UrlCardProps) {
       initial={{ opacity: 0, y: 20, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: 20, scale: 0.95 }}
-      transition={{ type: "spring", stiffness: 300, damping: 25 }}
+      transition={{
+        type: "spring",
+        stiffness: 400,
+        damping: 30,
+        opacity: { duration: 0.15 },
+      }}
       className="relative bg-bg-base border border-border rounded-2xl shadow-2xl overflow-hidden max-w-sm w-full"
     >
       {/* Glowing header line */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-accent to-transparent opacity-80" />
+      <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-accent to-transparent opacity-80" />
 
       {/* Close Button */}
       <Button
@@ -61,7 +66,7 @@ export default function UrlCard({ result, onClose }: UrlCardProps) {
           </h3>
         </div>
 
-        <div className="h-px w-full max-w-4xl bg-gradient-to-r from-transparent via-border to-transparent"></div>
+        <div className="h-px w-full max-w-4xl bg-linear-to-r from-transparent via-border to-transparent"></div>
 
         <div className="space-y-1 w-full overflow-hidden">
           <p className="text-text-muted text-sm truncate max-w-full px-4 opacity-70">

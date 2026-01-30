@@ -3,24 +3,54 @@ import { NextRequest } from "next/server";
 import { nanoid } from "nanoid";
 import { Url } from "@/models/UrlSchema";
 import { headers } from "next/headers";
+import { urlSchema } from "@/schemas/url";
 
 export async function POST(request: NextRequest) {
+  const headerList = await headers();
+  const host = headerList.get("host");
+  const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
 
+  const baseUrl = `${protocol}://${host}`;
 
-const headerList = await headers();
-const host = headerList.get('host');
-const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-  
- const baseUrl = `${protocol}://${host}`;
-  
   try {
     await dbConnect();
-    const data = await request.json();
-    const originalUrl = data.url;
-    if (!originalUrl) {
-      return new Response("URL is required", { status: 400 });
+    const body = await request.json();
+
+    // Validate with Zod
+    const validation = urlSchema.safeParse(body);
+
+    if (!validation.success) {
+      return new Response(
+        JSON.stringify({ error: validation.error.issues[0].message }),
+        { status: 400, headers: { "Content-Type": "application/json" } },
+      );
     }
-    const shortCode = nanoid(6);
+
+    const { url: originalUrl, alias } = validation.data;
+
+    let shortCode = alias || nanoid(6);
+
+    // If custom alias is provided, check if it already exists
+    if (alias) {
+      const existing = await Url.findOne({ shortCode: alias });
+      if (existing) {
+        return new Response(
+          JSON.stringify({ error: "Alias is already taken" }),
+          { status: 400, headers: { "Content-Type": "application/json" } },
+        );
+      }
+    } else {
+      // If no alias, ensures nanoid doesn't collide (very unlikely but good practice)
+      let exists = true;
+      while (exists) {
+        const checkExisting = await Url.findOne({ shortCode });
+        if (!checkExisting) {
+          exists = false;
+        } else {
+          shortCode = nanoid(6);
+        }
+      }
+    }
 
     await Url.create({
       originalUrl,
@@ -29,7 +59,7 @@ const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
 
     return new Response(
       JSON.stringify({
-        originalUrl, 
+        originalUrl,
         shortUrl: `${baseUrl}/${shortCode}`,
       }),
       { status: 201 },

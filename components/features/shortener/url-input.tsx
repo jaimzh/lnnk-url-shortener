@@ -2,33 +2,96 @@
 
 import React, { useState, useRef } from "react";
 import { motion } from "motion/react";
-import { Link2, ArrowRight, ClipboardPaste } from "lucide-react";
+import { ClipboardPaste } from "lucide-react";
 import { useHeroContext } from "@/context/HeroContext";
 import LoadingModal from "@/components/features/shortener/LoadingModal";
-import { readFromClipboard } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-
-type UrlInputProps = {
-  onShorten?: (url: string) => void | Promise<void>;
-  className?: string;
-};
+import { readFromClipboard, cn } from "@/lib/utils";
+import { ShortenButton } from "@/components/ui/shorten-button";
+import { urlSchema } from "@/schemas/url";
+import { AdvancedOptions } from "./advanced-options";
 
 export default function UrlInput() {
   const { isHeroShortened, setIsHeroShortened } = useHeroContext();
 
   const [url, setUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<{
     originalUrl: string;
     shortUrl: string;
   } | null>(null);
+
+  const [showAdvanced, setShowAdvanced] = useState(false);
+  const [aliasType, setAliasType] = useState("random"); // random, custom
+  const [customAlias, setCustomAlias] = useState("");
+  const [randomFlavor, setRandomFlavor] = useState("text"); // text, emoji, kaomoji, mix
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleShorten = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError(null);
 
     const trimmed = url.trim();
-    if (!trimmed) return;
+
+    // Determine the alias to send
+    let aliasToSend = "";
+    if (aliasType === "custom" && customAlias.trim()) {
+      aliasToSend = customAlias.trim();
+    } else if (aliasType === "random" && randomFlavor !== "text") {
+      // For special random flavors, generate them on the frontend
+      const EMOJIS = [
+        "🔥",
+        "🚀",
+        "💀",
+        "✨",
+        "🌈",
+        "🍦",
+        "⚡",
+        "💎",
+        "🦄",
+        "🍀",
+        "🍕",
+        "🎮",
+      ];
+      const KAOMOJIS = [
+        "( ͡° ͜ʖ ͡°)",
+        "(¬‿¬)",
+        "(ʘ‿ʘ)",
+        "(ง •̀_•́)ง",
+        "(╯°□°）╯︵ ┻━┻",
+        "(✿◕‿◕)",
+        "(⌐■_■)",
+        "(◕‿◕✿)",
+        "(╥﹏╥)",
+        "༼ つ ◕_◕ ༽つ",
+      ];
+      const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+
+      if (randomFlavor === "emoji") {
+        aliasToSend = Array.from(
+          { length: 3 },
+          () => EMOJIS[Math.floor(Math.random() * EMOJIS.length)],
+        ).join("");
+      } else if (randomFlavor === "kaomoji") {
+        aliasToSend = KAOMOJIS[Math.floor(Math.random() * KAOMOJIS.length)];
+      } else if (randomFlavor === "mix") {
+        const rChar = chars[Math.floor(Math.random() * chars.length)];
+        const rEmoji = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
+        aliasToSend = `${rChar}${rEmoji}${chars[Math.floor(Math.random() * chars.length)]}`;
+      }
+    }
+
+    // Validate with Zod before doing anything else
+    const validation = urlSchema.safeParse({
+      url: trimmed,
+      alias: aliasToSend,
+    });
+
+    if (!validation.success) {
+      setError(validation.error.issues[0].message);
+      return;
+    }
 
     setIsLoading(true);
     setResult(null);
@@ -37,11 +100,15 @@ export default function UrlInput() {
       const response = await fetch("/api/shorten", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url: trimmed }),
+        body: JSON.stringify({
+          url: validation.data.url,
+          alias: validation.data.alias,
+        }),
       });
 
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || "Failed to shorten URL");
       }
 
       const data = await response.json();
@@ -52,8 +119,10 @@ export default function UrlInput() {
       setResult(data);
       setIsLoading(false);
       setUrl("");
-    } catch (error) {
+      setCustomAlias("");
+    } catch (error: any) {
       console.error("Failed to shorten URL:", error);
+      setError(error.message || "An unexpected error occurred");
       setIsLoading(false);
     }
   };
@@ -67,6 +136,7 @@ export default function UrlInput() {
     const copiedText = await readFromClipboard();
     if (copiedText) {
       setUrl(copiedText);
+      setError(null);
       inputRef.current?.focus();
     }
   };
@@ -78,9 +148,21 @@ export default function UrlInput() {
         result={result}
         onClose={handleCloseModal}
       />
-      <div className={"relative w-full max-w-2xl mx-auto "}>
-        <div className="          group relative flex items-center h-12 md:h-16 w-full rounded-full border border-accent/50 bg-bg-base backdrop-blur-sm transition-all duration-300 ease-in-out focus-within:border-accent  p-1 md:p-1.5">
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-accent/50 to-transparent opacity-80" />
+      <div className={"relative w-full max-w-2xl mx-auto space-y-4"}>
+        <div
+          className={cn(
+            "group relative flex items-center h-12 md:h-16 w-full rounded-full border bg-bg-base/80 backdrop-blur-xl transition-all duration-300 ease-in-out p-1 md:p-1.5 shadow-2xl",
+            error
+              ? "border-destructive/50 focus-within:border-destructive"
+              : "border-accent/50 focus-within:border-accent",
+          )}
+        >
+          <div
+            className={cn(
+              "absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent to-transparent opacity-80",
+              error ? "via-destructive/50" : "via-accent/50",
+            )}
+          />
 
           <form
             onSubmit={handleShorten}
@@ -106,27 +188,45 @@ export default function UrlInput() {
                 ref={inputRef}
                 type="text"
                 value={url}
-                required
-                onFocus={(e) => setIsHeroShortened(true)}
-                onChange={(e) => setUrl(e.target.value)}
+                onFocus={() => setIsHeroShortened(true)}
+                onChange={(e) => {
+                  setUrl(e.target.value);
+                  if (error) setError(null);
+                }}
                 placeholder="Drop your long link here..."
                 className="w-full bg-transparent text-text-base placeholder:text-text-muted/20 outline-none text-sm md:text-base font-light tracking-wide py-1 caret-accent"
               />
             </div>
 
-            <Button
+            <ShortenButton
               type="submit"
               disabled={!url.trim() || isLoading}
-              variant="pill"
-              className="h-full px-2 md:px-4 min-w-[40px] md:min-w-[140px] gap-2 disabled:opacity-80 disabled:cursor-not-allowed"
-            >
-              <span className="hidden md:block text-sm uppercase">
-                {isLoading ? "Wait..." : "Shorten"}
-              </span>
-              {!isLoading && <ArrowRight size={14} strokeWidth={2.5} />}
-            </Button>
+              isLoading={isLoading}
+              className="h-full px-2 md:px-4 min-w-[40px] md:min-w-[140px]"
+            />
           </form>
         </div>
+
+        <AdvancedOptions
+          showAdvanced={showAdvanced}
+          setShowAdvanced={setShowAdvanced}
+          aliasType={aliasType}
+          setAliasType={setAliasType}
+          customAlias={customAlias}
+          setCustomAlias={setCustomAlias}
+          randomFlavor={randomFlavor}
+          setRandomFlavor={setRandomFlavor}
+        />
+
+        {error && (
+          <motion.p
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-destructive text-xs md:text-sm mt-3 ml-6 font-medium"
+          >
+            {error}
+          </motion.p>
+        )}
       </div>
     </>
   );

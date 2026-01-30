@@ -9,7 +9,7 @@ export default function LoadingSpinner() {
       key="loading"
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
+      exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.15 } }}
       className="flex flex-col items-center justify-center gap-6 py-12 "
     >
       <div className="relative w-20 h-20 flex items-center justify-center">

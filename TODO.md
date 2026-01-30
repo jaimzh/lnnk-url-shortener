@@ -10,5 +10,5 @@
 - [ ] Add a loading state or preload page for better performance.
 - [ ] Verify headers, host, and port settings before pushing to production.
 - [ ] Add a visual separator between the input section and the dashboard table.
-- [ ] Refine button and table styling for a glassmorphism look.
-- [ ] Add copyright info to the footer.
+- [x] Refine button and table styling for a glassmorphism look.
+- [x] Add copyright info to the footer.

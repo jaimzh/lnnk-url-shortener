@@ -19,7 +19,7 @@ export function CopyCell({ text }: { text: string }) {
   };
 
   return (
-    <div className="group/copy w-fit flex items-center justify-center gap-2 mx-auto">
+  <div className="group/copy w-fit flex items-center justify-center gap-2 mx-auto">
       {/* The Actual Link */}
       <Link
         href={text}

@@ -89,7 +89,6 @@
   --color-text-base: var(--custom-text-base);
   --color-text-muted: var(--custom-text-muted);
 
-
   /* Standard Tailwind Overrides */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -139,6 +138,17 @@
 
   /* Fonts */
   --font-sans: var(--font-ubuntu), sans-serif;
+
+  /* Animations */
+  @keyframes spin-slow {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  --animate-spin-slow: spin-slow 8s linear infinite;
 }
 
 @layer base {

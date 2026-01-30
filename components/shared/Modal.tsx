@@ -18,13 +18,25 @@ export default function Modal({ isOpen, onClose, children }: ModalProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
             onClick={onClose}
             className="absolute inset-0 bg-bg-base/80 backdrop-blur-md"
           />
 
-          <div className="relative z-10 w-full max-w-sm flex items-center justify-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            transition={{
+              type: "spring",
+              damping: 30,
+              stiffness: 400,
+              opacity: { duration: 0.15 },
+            }}
+            className="relative z-10 w-full max-w-sm flex items-center justify-center"
+          >
             {children}
-          </div>
+          </motion.div>
         </div>
       )}
     </AnimatePresence>
