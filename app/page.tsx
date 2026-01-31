@@ -1,7 +1,8 @@
 import { DashboardTable } from "@/components/features/dashboard/dashboard-table";
 import Footer from "@/components/footer";
 import Hero from "@/components/hero";
-import { Navbar } from "@/components/Navbar";
+import { Navbar } from "@/components/navbar";
+
 
 import { SectionSeparator } from "@/components/shared/section-separator";
 
