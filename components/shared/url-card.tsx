@@ -44,9 +44,6 @@ export default function UrlCard({ result, onClose }: UrlCardProps) {
       }}
       className="relative bg-bg-base border border-border rounded-2xl shadow-2xl overflow-hidden max-w-sm w-full"
     >
-      {/* Glowing header line */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-accent to-transparent opacity-80" />
-
       {/* Close Button */}
       <Button
         variant="ghost"
