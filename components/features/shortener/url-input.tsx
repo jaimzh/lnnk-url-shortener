@@ -182,7 +182,7 @@ export default function UrlInput() {
                   if (error) setError(null);
                 }}
                 placeholder="Drop your long link here..."
-                className="w-full bg-transparent text-text-base placeholder:text-text-muted/20 outline-none text-sm md:text-base font-light tracking-wide py-1 caret-accent"
+                className="w-full bg-transparent text-text-base placeholder:text-text-muted/20 outline-none text-base md:text-base font-light tracking-wide py-1 caret-accent"
               />
             </div>
 

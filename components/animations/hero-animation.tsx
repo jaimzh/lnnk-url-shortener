@@ -54,7 +54,7 @@ export default function HeroAnimation() {
 
       <style>{`
         .url-box {
-          font-size: clamp(3rem, 8vw, 4rem);
+          font-size: clamp(1.8rem, 8vw, 4rem);
           color: #f1f1f1;
         }
 
@@ -127,15 +127,19 @@ export default function HeroAnimation() {
           transform: scale(1);
         }
 
-        @media (max-widt: 768px) {
+        @media (max-width: 768px) {
           .shortened .char-lnk {
-            font-size: clamp(4rem, 18vw, 6rem);
+            font-size: clamp(3rem, 18vw, 5.5rem);
             letter-spacing: -0.04em;
           }
           .shortened .dot {
-            width: clamp(16px, 6vw, 24px);
-            height: clamp(16px, 6vw, 24px);
+            width: clamp(12px, 5vw, 20px);
+            height: clamp(12px, 5vw, 20px);
             transform: translateY(0.08em);
+          }
+          .ambient-glow {
+            width: 140%;
+            height: 140%;
           }
         }
       `}</style>
