@@ -3,7 +3,7 @@
 import { QrCode } from "lucide-react";
 import { useState } from "react";
 import UrlCard from "../../shared/url-card";
-import Modal from "../../shared/Modal";
+import Modal from "../../shared/modal";
 
 interface QrCellProps {
   originalUrl: string;

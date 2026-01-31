@@ -4,7 +4,7 @@ import React, { useState, useRef } from "react";
 import { motion } from "motion/react";
 import { ClipboardPaste } from "lucide-react";
 import { useHeroContext } from "@/context/HeroContext";
-import LoadingModal from "@/components/features/shortener/LoadingModal";
+import LoadingModal from "@/components/features/shortener/loading-modal";
 import { readFromClipboard, cn } from "@/lib/utils";
 import { ShortenButton } from "@/components/ui/shorten-button";
 import { urlSchema } from "@/schemas/url";

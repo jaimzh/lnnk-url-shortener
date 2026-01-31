@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Ubuntu } from "next/font/google";
 import "./globals.css";
 import { HeroProvider } from "@/context/HeroContext";
-import BrownianParticles from "@/components/animations/BrownianParticles";
+import BrownianParticles from "@/components/animations/brownian-particles";
 
 const ubuntu = Ubuntu({
   subsets: ["latin"],

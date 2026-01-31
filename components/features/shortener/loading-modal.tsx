@@ -2,9 +2,9 @@
 
 import React from "react";
 import { AnimatePresence } from "motion/react";
-import LoadingSpinner from "../../shared/LoadingSpinner";
+import LoadingSpinner from "../../shared/loading-spinner";
 import UrlCard from "../../shared/url-card";
-import Modal from "../../shared/Modal";
+import Modal from "../../shared/modal";
 
 interface LoadingModalProps {
   isLoading: boolean;
