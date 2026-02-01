@@ -40,8 +40,9 @@ export default function BrownianParticles() {
       }
 
       init() {
-        this.x = Math.random() * canvas!.width;
-        this.y = Math.random() * canvas!.height;
+        if (!canvas) return;
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
         this.vx = (Math.random() - 0.5) * 0.2;
         this.vy = (Math.random() - 0.5) * 0.2;
         this.radius = Math.random() * 1.2 + 0.4;
@@ -53,6 +54,7 @@ export default function BrownianParticles() {
       }
 
       update() {
+        if (!canvas) return;
         this.x += this.vx + Math.sin(this.wobbleX) * 0.08;
         this.y += this.vy + Math.cos(this.wobbleY) * 0.08;
         this.wobbleX += this.wobbleSpeed;
@@ -62,21 +64,22 @@ export default function BrownianParticles() {
           this.alpha += 0.005;
         }
 
-        if (this.x < -10) this.x = canvas!.width + 10;
-        if (this.x > canvas!.width + 10) this.x = -10;
-        if (this.y < -10) this.y = canvas!.height + 10;
-        if (this.y > canvas!.height + 10) this.y = -10;
+        if (this.x < -10) this.x = canvas.width + 10;
+        if (this.x > canvas.width + 10) this.x = -10;
+        if (this.y < -10) this.y = canvas.height + 10;
+        if (this.y > canvas.height + 10) this.y = -10;
       }
 
       draw() {
-        if (!ctx) return;
-        ctx.save();
-        ctx.globalAlpha = this.alpha;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(255, 255, 245, 1)";
-        ctx.fill();
-        ctx.restore();
+        const localCtx = ctx;
+        if (!localCtx) return;
+        localCtx.save();
+        localCtx.globalAlpha = this.alpha;
+        localCtx.beginPath();
+        localCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        localCtx.fillStyle = "rgba(255, 255, 245, 1)";
+        localCtx.fill();
+        localCtx.restore();
       }
     }
 
