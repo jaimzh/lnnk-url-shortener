@@ -69,6 +69,7 @@ export default function BrownianParticles() {
       }
 
       draw() {
+        if (!ctx) return;
         ctx.save();
         ctx.globalAlpha = this.alpha;
         ctx.beginPath();
@@ -105,6 +106,7 @@ export default function BrownianParticles() {
     resize();
 
     const animate = () => {
+      if (!ctx) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       for (let i = 0; i < particles.length; i++) {
         particles[i].update();
