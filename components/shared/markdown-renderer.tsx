@@ -14,7 +14,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
         remarkPlugins={[remarkGfm]}
         components={{
           h1: ({ children }) => (
-            <h1 className="text-4xl font-bold tracking-tighter text-accent mb-8 mt-12 first:mt-0">
+            <h1 className="text-4xl font-bold tracking-tighter text-text-base mb-8 mt-12 first:mt-0">
               {children}
             </h1>
           ),
@@ -24,7 +24,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
             </h2>
           ),
           h3: ({ children }) => (
-            <h3 className="text-xl font-bold text-accent/80 mb-4 mt-8">
+            <h3 className="text-xl font-bold text-text-base/80 mb-4 mt-8">
               {children}
             </h3>
           ),
@@ -44,7 +44,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
             const isInline = !className?.includes("language-");
 
             return isInline ? (
-              <code className="bg-accent/10 text-accent px-1.5 py-0.5 rounded-md text-sm font-mono">
+              <code className="bg-accent/10 text-violet-400 px-1.5 py-0.5 rounded-md text-sm font-mono">
                 {children}
               </code>
             ) : (
@@ -53,6 +53,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
           },
 
           pre: ({ children }) => (
+            // The big glassmorphism box
             <pre className="bg-bg-base/50 border border-white/5 rounded-2xl p-6 mb-8 overflow-x-auto backdrop-blur-sm font-mono text-sm leading-relaxed text-text-base">
               {children}
             </pre>

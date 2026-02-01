@@ -1,4 +1,4 @@
-# How `lnk` Actually Works (A Brain Dump)
+# How lnk Actually Works (A Brain Dump)
 
 Haha, I was once like you. I thought URL shortening was some form of dark magic or straight-up sorcery. But once you peel back the curtain, it’s actually pretty simple.
 
