@@ -14,7 +14,7 @@ export default async function HowItWorks() {
     <main className="min-h-screen py-20 px-6 max-w-4xl mx-auto">
       <Link href="/" className="flex items-center gap-2 text-text-muted mb-12">
         <ArrowLeft size={18} />
-        Back to Home
+        Back
       </Link>
       <header className="mb-12">
         <h1 className="text-4xl md:text-6xl font-bold text-text-base">

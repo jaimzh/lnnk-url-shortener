@@ -1,6 +1,6 @@
 # How lnk Actually Works (A Brain Dump)
 
-Haha, I was once like you. I thought URL shortening was some form of dark magic or straight-up sorcery. But once you peel back the curtain, it’s actually pretty simple.
+Haha, I was once like you. I thought URL shortening was some form of dark magic or straight-up sorcery. But once you understand how it works it’s actually pretty simple.
 
 At a high level, it's just **mapping strings to specific addresses** stored in a database. Here is how we(me, myself, and I) break it down step-by-step.
 
@@ -8,7 +8,7 @@ At a high level, it's just **mapping strings to specific addresses** stored in a
 
 ### Step 1: The Input & The "Nickname" (Alias)
 
-First, we take a long, messy link—let's say `https://google.com`.
+First, we take a long, messy link, let's say `https://google.com`.
 
 Instead of using that long string, we link it to a randomly generated string. In the dev world, we call this an **Alias** (which is just a fancy way of saying a nickname).
 
