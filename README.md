@@ -2,6 +2,11 @@
 
 A modern, fast, and minimal URL shortener built with Next.js and MongoDB.
 
+## Live Demo
+
+- [Main Instance](https://lnk.pxxl.click/)
+- [Vercel Mirror](https://lnkkk.vercel.app/)
+
 ## Features
 
 - **Fast Redirection**: Instant redirection from short aliases to original URLs.
