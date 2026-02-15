@@ -27,12 +27,17 @@ export async function copyToClipboard(text: string): Promise<boolean> {
 
 export function getDisplayDomain() {
   if (typeof window !== "undefined") {
-    return window.location.host;
+    const host = window.location.host;
+   
+    if (host.includes("pxxl.click") || host.includes("vercel.app")) {
+      return "lnnk.click";
+    }
+    return host;
   }
   return (
     process.env.NEXT_PUBLIC_BASE_URL?.replace(/^https?:\/\//, "").replace(
       /\/$/,
       "",
-    ) || "lnnk.li"
+    ) || "lnnk.click"
   );
 }
