@@ -26,8 +26,13 @@ export async function copyToClipboard(text: string): Promise<boolean> {
 }
 
 export function getDisplayDomain() {
-  // if (typeof window !== "undefined") {
-  //   return window.location.host;
-  // }
-  return "lnnk.li"; // Default fallback for server-side
+  if (typeof window !== "undefined") {
+    return window.location.host;
+  }
+  return (
+    process.env.NEXT_PUBLIC_BASE_URL?.replace(/^https?:\/\//, "").replace(
+      /\/$/,
+      "",
+    ) || "lnnk.li"
+  );
 }
