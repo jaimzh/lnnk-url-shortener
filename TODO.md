@@ -1,6 +1,6 @@
 # List of things TODO
 
-- [ ] Maybe change the name to from lnk to stl(shorten that link)
+- [ ] Maybe change the name to from lnnk to stl(shorten that link)
 - [x] Ensure only valid URLs are added to the database.
 - [x] Create a helper to automatically attach http or https to links if the user forgets.
 - [x] Make the dashboard table auto-update after a new link is created.

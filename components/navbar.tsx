@@ -9,7 +9,7 @@ export function Navbar() {
         href="/"
         className="text-xl font-extrabold tracking-tighter text-text-base hover:opacity-80 transition-opacity"
       >
-        lnk<span className="text-accent">.</span>
+        lnnk<span className="text-accent">.</span>
       </Link>
 
       <Link

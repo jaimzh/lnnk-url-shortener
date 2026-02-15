@@ -1,4 +1,4 @@
-# How lnk Actually Works (A Brain Dump)
+# How lnnk Actually Works (A Brain Dump)
 
 Haha, I was once like you. I thought URL shortening was some form of dark magic or straight-up sorcery. But once you understand how it works it’s actually pretty simple.
 
@@ -44,7 +44,7 @@ In the code, it looks a bit like this:
 
 Once it’s safely stored, we give the user back a brand new, short URL. It looks like this:
 
-`baseurl/[stored_alias]` -> `lnk.sh/123random`
+`baseurl/[stored_alias]` -> `lnnk.sh/123random`
 
 The **Base URL** is just our website's address. The magic is all in that little string at the end.
 
@@ -54,7 +54,7 @@ The **Base URL** is just our website's address. The magic is all in that little 
 
 Okay, come a little closer for this part because this is where it all makes sense.
 
-Each time someone clicks that short link (`lnk.sh/123random`), a piece of code in our backend wakes up. It grabs the `123random` part from the link and shouts into the database:
+Each time someone clicks that short link (`lnnk.sh/123random`), a piece of code in our backend wakes up. It grabs the `123random` part from the link and shouts into the database:
 
 > _"Ayyyy yo! Who in here is linked to '123random'?"_
 
@@ -85,4 +85,4 @@ if (destination) {
 2. **Store both** in a database so they're "married."
 3. **Search & Redirect:** When someone uses the nickname, find the partner and open it.
 
-So yeahhh that's the basic summary of how it works, still some extra things like decoding raw emoji strings and such, but yup, that's pretty much it for now. 
+So yeahhh that's the basic summary of how it works, still some extra things like decoding raw emoji strings and such, but yup, that's pretty much it for now.

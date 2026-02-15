@@ -10,7 +10,7 @@ export default function Footer() {
         <div className="flex items-center gap-1.5 order-2 md:order-1">
           <span>© {currentYear}</span>
           <span className="font-bold text-text-muted/80 tracking-tighter">
-            lnk<span className="text-accent/50">.</span>
+            lnnk<span className="text-accent/50">.</span>
           </span>
           <span className="hidden md:inline">—</span>
           <span>All rights reserved.</span>

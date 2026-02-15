@@ -1,11 +1,11 @@
-# LNK URL Shortener
+# LNNK URL Shortener
 
 A modern, fast, and minimal URL shortener built with Next.js and MongoDB.
 
 ## Live Demo
 
-- [Main Instance](https://lnk.pxxl.click/)
-- [Vercel Mirror](https://lnkkk.vercel.app/)
+- [Main Instance](https://lnnk.pxxl.click/)
+- [Vercel Mirror](https://lnnkkk.vercel.app/)
 
 ## Features
 
@@ -34,8 +34,8 @@ A modern, fast, and minimal URL shortener built with Next.js and MongoDB.
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/jaimzh/lnk-url-shortener.git
-   cd lnk-url-shortener
+   git clone https://github.com/jaimzh/lnnk-url-shortener.git
+   cd lnnk-url-shortener
    ```
 
 2. Install dependencies:

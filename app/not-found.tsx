@@ -25,7 +25,7 @@ export default function NotFound() {
           href="/"
           className="inline-flex h-12 items-center justify-center rounded-full bg-accent px-8 text-sm font-medium text-white transition-all hover:opacity-90 hover:scale-105 active:scale-95 shadow-lg shadow-accent/20"
         >
-          Back to Lnk
+          Back to Lnnk
         </Link>
       </div>
     </main>

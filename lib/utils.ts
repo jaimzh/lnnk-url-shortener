@@ -29,5 +29,5 @@ export function getDisplayDomain() {
   // if (typeof window !== "undefined") {
   //   return window.location.host;
   // }
-  return "lnk.li"; // Default fallback for server-side
+  return "lnnk.li"; // Default fallback for server-side
 }

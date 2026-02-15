@@ -5,10 +5,7 @@ import path from "path";
 import fs from "fs/promises";
 
 export default async function HowItWorks() {
-  
-  
-  
-  const filePath = path.join(process.cwd(),"MY_THOUGHTS.md");
+  const filePath = path.join(process.cwd(), "MY_THOUGHTS.md");
   const markdown = await fs.readFile(filePath, "utf-8");
   return (
     <main className="min-h-screen py-20 px-6 max-w-4xl mx-auto">
@@ -18,11 +15,11 @@ export default async function HowItWorks() {
       </Link>
       <header className="mb-12">
         <h1 className="text-4xl md:text-6xl font-bold text-text-base">
-          How <span className="text-accent">lnk</span> works 
+          How <span className="text-accent">lnnk</span> works
         </h1>
         (still cooking tho)
       </header>
-     
+
       <HowItWorksClient markdownContent={markdown} />
     </main>
   );

@@ -44,7 +44,6 @@ export default function UrlCard({ result, onClose }: UrlCardProps) {
       }}
       className="relative bg-bg-base border border-border rounded-2xl shadow-2xl overflow-hidden max-w-sm w-full"
     >
-     
       <Button
         variant="ghost"
         size="icon"
@@ -55,11 +54,10 @@ export default function UrlCard({ result, onClose }: UrlCardProps) {
       </Button>
 
       <div className="p-6 md:p-8 flex flex-col items-center text-center space-y-6">
-       
         <div className=" flex gap-2 items-center justify-center mb-2">
           <Check size={32} strokeWidth={3} />
           <h3 className="text-xl md:text-2xl font-semibold text-text-base">
-            Lnk
+            Lnnk
           </h3>
         </div>
 
@@ -73,13 +71,14 @@ export default function UrlCard({ result, onClose }: UrlCardProps) {
 
         {/* QR Code */}
         <motion.div
-        whileHover={{ scale: 1.1 }}
-        transition={{
-          type: "spring",
-          stiffness: 400,
-          damping: 30,
-        }}
-        className="p-3 bg-white rounded-xl shadow-lg">
+          whileHover={{ scale: 1.1 }}
+          transition={{
+            type: "spring",
+            stiffness: 400,
+            damping: 30,
+          }}
+          className="p-3 bg-white rounded-xl shadow-lg"
+        >
           <QRCodeCanvas
             value={result.shortUrl}
             size={160}

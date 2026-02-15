@@ -44,7 +44,7 @@ export default function Preloader() {
           </div>
 
           <div className="relative flex flex-col items-center">
-            {/* LNK Text Animation */}
+            {/* LNNK Text Animation */}
             <div className="flex items-baseline gap-1 mb-8">
               <motion.span
                 initial={{ y: 20, opacity: 0 }}
@@ -58,6 +58,14 @@ export default function Preloader() {
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
+                className="text-6xl md:text-8xl font-bold tracking-tighter text-text-base select-none"
+              >
+                n
+              </motion.span>
+              <motion.span
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.35 }}
                 className="text-6xl md:text-8xl font-bold tracking-tighter text-text-base select-none"
               >
                 n

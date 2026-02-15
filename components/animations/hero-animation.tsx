@@ -17,11 +17,12 @@ export default function HeroAnimation() {
       </div>
       <div className="url-box relative flex items-center justify-center whitespace-nowrap tracking-wide">
         <div className="ambient-glow" aria-hidden="true" />
-        <span className="char-lnk">l</span>
+        <span className="char-lnnk">l</span>
         <span className="char-filler">ooo</span>
-        <span className="char-lnk">n</span>
-        <span className="char-filler">g-lin</span>
-        <span className="char-lnk">k</span>
+        <span className="char-lnnk">n</span>
+        <span className="char-filler">g-li</span>
+        <span className="char-lnnk">n</span>
+        <span className="char-lnnk">k</span>
         <span className="dot"></span>
       </div>
 
@@ -58,7 +59,7 @@ export default function HeroAnimation() {
           color: #f1f1f1;
         }
 
-        .char-lnk {
+        .char-lnnk {
           display: inline-block;
           transition: all 0.8s cubic-bezier(0.68, -0.6, 0.32, 1.6);
           color: var(--text-muted);
@@ -82,7 +83,7 @@ export default function HeroAnimation() {
           pointer-events: none;
         }
 
-        .shortened .char-lnk {
+        .shortened .char-lnnk {
           font-size: clamp(4rem, 20vw, 8.5rem);
           letter-spacing: -0.05em;
           color: #ffffff;
@@ -128,7 +129,7 @@ export default function HeroAnimation() {
         }
 
         @media (max-width: 768px) {
-          .shortened .char-lnk {
+          .shortened .char-lnnk {
             font-size: clamp(3rem, 18vw, 5.5rem);
             letter-spacing: -0.04em;
           }
