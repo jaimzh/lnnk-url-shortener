@@ -26,6 +26,10 @@ export const urlSchema = z.object({
     .optional()
     .or(z.literal("")),
   visibility: z.enum(["public", "private"]).default("public"),
+
+  brandingTitle: z.string().optional(),
+  brandingDescription: z.string().optional(),
+  brandingImage: z.string().optional(),
 });
 
 export type UrlInput = z.infer<typeof urlSchema>;

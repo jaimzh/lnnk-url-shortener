@@ -10,6 +10,9 @@ const UrlSchema = new Schema(
       enum: ["public", "private"],
       default: "public",
     },
+    brandingTitle: { type: String },
+    brandingDescription: { type: String },
+    brandingImage: { type: String },
   },
   { timestamps: true },
 );
@@ -27,4 +30,7 @@ export interface UrlDoc {
   clicks: number;
   visibility: "public" | "private";
   createdAt: Date;
+  brandingTitle?: string;
+  brandingDescription?: string;
+  brandingImage?: string;
 }

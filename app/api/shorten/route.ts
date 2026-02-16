@@ -22,10 +22,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { url: originalUrl, alias, visibility } = validation.data;
-    console.log(
-      `[API] Shortening URL: visibility=${visibility}, alias=${alias}`,
-    );
+    const { url: originalUrl, alias, visibility, brandingTitle, brandingDescription, brandingImage } = validation.data;
+   
 
     let shortCode = alias || nanoid(6);
 
@@ -55,6 +53,9 @@ export async function POST(request: NextRequest) {
       originalUrl,
       shortCode,
       visibility,
+      brandingTitle,
+      brandingDescription,
+      brandingImage,
     });
 
     return new Response(

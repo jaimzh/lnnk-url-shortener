@@ -39,6 +39,11 @@ export default function UrlInput() {
   const [randomPreview, setRandomPreview] = useState("");
   const [visibility, setVisibility] = useState<"public" | "private">("public");
 
+  // Branding part
+  const [brandingTitle, setBrandingTitle] = useState("");
+  const [brandingDescription, setBrandingDescription] = useState("");
+  const [brandingImageUrl, setBrandingImageUrl] = useState("");
+
   const handleRegenerateRandom = () => {
     setRandomPreview(generateRandomAlias(randomFlavor));
   };
@@ -69,6 +74,9 @@ export default function UrlInput() {
       url: trimmed,
       alias: alias,
       visibility: visibility,
+      brandingTitle: brandingTitle,
+      brandingDescription: brandingDescription,
+      brandingImage: brandingImageUrl,
     });
 
     if (!validation.success) {
@@ -87,6 +95,9 @@ export default function UrlInput() {
           url: validation.data.url,
           alias: validation.data.alias,
           visibility: validation.data.visibility,
+          brandingTitle: validation.data.brandingTitle,
+          brandingDescription: validation.data.brandingDescription,
+          brandingImage: validation.data.brandingImage,
         }),
       });
 
@@ -108,6 +119,9 @@ export default function UrlInput() {
       setRandomFlavor("text");
       setAliasType("random");
       setVisibility("public");
+      setBrandingTitle("");
+      setBrandingDescription("");
+      setBrandingImageUrl("");
 
       setRandomPreview(generateRandomAlias("text"));
     } catch (error: any) {
@@ -210,6 +224,12 @@ export default function UrlInput() {
           onRegenerate={handleRegenerateRandom}
           visibility={visibility}
           setVisibility={setVisibility}
+          brandingTitle={brandingTitle}
+          setBrandingTitle={setBrandingTitle}
+          brandingDescription={brandingDescription}
+          setBrandingDescription={setBrandingDescription}
+          brandingImageUrl={brandingImageUrl}
+          setBrandingImageUrl={setBrandingImageUrl}
         />
         {error && (
           <motion.p

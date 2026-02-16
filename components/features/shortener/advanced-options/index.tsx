@@ -9,6 +9,8 @@ import { ALIAS_STRATEGIES, AliasStrategy, RandomFlavor } from "./constants";
 import { StrategySelector } from "./strategy-selector";
 import { RandomStrategy } from "./random-strategy";
 import { CustomStrategy } from "./custom-strategy";
+import { BrandingOptions } from "./branding-options";
+import { LayoutGrid, Share2 } from "lucide-react";
 
 interface AdvancedOptionsProps {
   showAdvanced: boolean;
@@ -23,6 +25,12 @@ interface AdvancedOptionsProps {
   onRegenerate: () => void;
   visibility: "public" | "private";
   setVisibility: (visibility: "public" | "private") => void;
+  brandingTitle: string;
+  setBrandingTitle: (val: string) => void;
+  brandingDescription: string;
+  setBrandingDescription: (val: string) => void;
+  brandingImageUrl: string;
+  setBrandingImageUrl: (val: string) => void;
 }
 
 export function AdvancedOptions({
@@ -38,10 +46,17 @@ export function AdvancedOptions({
   onRegenerate,
   visibility,
   setVisibility,
+  brandingTitle,
+  setBrandingTitle,
+  brandingDescription,
+  setBrandingDescription,
+  brandingImageUrl,
+  setBrandingImageUrl,
 }: AdvancedOptionsProps) {
+  const [showBranding, setShowBranding] = React.useState(false);
+
   return (
     <div className="space-y-2 pt-2">
-    
       <div className="flex justify-center">
         <button
           type="button"
@@ -73,7 +88,6 @@ export function AdvancedOptions({
         </button>
       </div>
 
-     
       <AnimatePresence>
         {showAdvanced && (
           <motion.div
@@ -83,7 +97,6 @@ export function AdvancedOptions({
             className="overflow-hidden"
           >
             <div className="pt-2 pb-4">
-            
               <div className="bg-bg-base/30 rounded-3xl p-6 border border-accent/50 backdrop-blur-sm">
                 <div className="max-w-md mx-auto space-y-6">
                   <StrategySelector
@@ -94,7 +107,6 @@ export function AdvancedOptions({
                     }}
                   />
 
-               
                   <div className="min-h-[100px]">
                     <AnimatePresence mode="wait">
                       {aliasType === ALIAS_STRATEGIES.RANDOM ? (
@@ -113,7 +125,6 @@ export function AdvancedOptions({
                     </AnimatePresence>
                   </div>
 
-                 
                   <div className="flex items-center justify-center gap-10 pt-4">
                     {[
                       { id: "public", icon: Globe, label: "Public" },
@@ -127,7 +138,6 @@ export function AdvancedOptions({
                         }
                         className="group flex items-center gap-4 cursor-pointer outline-none"
                       >
-                        
                         <div
                           className={cn(
                             "relative w-3.5 h-3.5 rounded-full border transition-all duration-500 flex items-center justify-center shrink-0",
@@ -150,7 +160,6 @@ export function AdvancedOptions({
                         </div>
 
                         <div className="flex items-center gap-2.5">
-                          
                           <option.icon
                             size={14}
                             className={cn(
@@ -173,6 +182,71 @@ export function AdvancedOptions({
                         </div>
                       </button>
                     ))}
+                  </div>
+
+                  {/* Divider */}
+                  <div className="h-px w-full bg-linear-to-r from-transparent via-white/5 to-transparent my-2" />
+
+                  {/* Branding Section */}
+                  <div className="space-y-4">
+                    <button
+                      type="button"
+                      onClick={() => setShowBranding(!showBranding)}
+                      className="w-full flex items-center justify-between p-4 rounded-2xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] hover:border-white/10 transition-all cursor-pointer group"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div
+                          className={cn(
+                            "w-8 h-8 rounded-xl flex items-center justify-center transition-colors",
+                            showBranding
+                              ? "bg-accent/20 text-accent"
+                              : "bg-white/5 text-text-muted",
+                          )}
+                        >
+                          <Share2 size={16} />
+                        </div>
+                        <div className="text-left">
+                          <h3 className="text-xs font-bold text-text-base uppercase tracking-wider">
+                            Link Branding
+                          </h3>
+                          <p className="text-[10px] text-text-muted/40">
+                            Customize how your link looks on social media
+                          </p>
+                        </div>
+                      </div>
+                      <div
+                        className={cn(
+                          "text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border transition-all",
+                          showBranding
+                            ? "bg-accent/10 border-accent/20 text-accent"
+                            : "bg-white/5 border-white/10 text-text-muted/40 group-hover:text-text-muted",
+                        )}
+                      >
+                        {showBranding ? "Active" : "Add"}
+                      </div>
+                    </button>
+
+                    <AnimatePresence>
+                      {showBranding && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="pt-2 pb-2">
+                            <BrandingOptions
+                              title={brandingTitle}
+                              setTitle={setBrandingTitle}
+                              description={brandingDescription}
+                              setDescription={setBrandingDescription}
+                              imageUrl={brandingImageUrl}
+                              setImageUrl={setBrandingImageUrl}
+                            />
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 </div>
               </div>
