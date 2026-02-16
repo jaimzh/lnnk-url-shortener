@@ -4,39 +4,42 @@ import { notFound, redirect } from "next/navigation";
 import { headers } from "next/headers";
 import { Metadata } from "next";
 
-// metadata that bots read, so we just get the data from db 
-export async function generateMetadata({ 
-  params 
-}: { 
-  params: Promise<{ code: string }> 
+// metadata that bots read, so we just get the data from db
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ code: string }>;
 }): Promise<Metadata> {
   await dbConnect();
   const { code: rawCode } = await params;
   const code = decodeURIComponent(rawCode);
   const urlEntry = await Url.findOne({ shortCode: code });
 
-  // const DEFAULT_PREVIEW_IMAGE = "https://lnnk.click/favicon.ico"; 
+  const DEFAULT_PREVIEW_IMAGE = "https://lnnk.click/lnnk-wide.png";
 
-    if (!urlEntry || !urlEntry.brandingTitle) return {};
+  if (!urlEntry || !urlEntry.brandingTitle) return {};
 
-    return {
+  return {
     title: urlEntry.brandingTitle || undefined,
     description: urlEntry.brandingDescription || undefined,
     openGraph: {
       title: urlEntry.brandingTitle || undefined,
       description: urlEntry.brandingDescription || undefined,
-      images: urlEntry.brandingImage ? [urlEntry.brandingImage] : [],
+      images: urlEntry.brandingImage
+        ? [urlEntry.brandingImage]
+        : [DEFAULT_PREVIEW_IMAGE],
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
       title: urlEntry.brandingTitle || undefined,
       description: urlEntry.brandingDescription || undefined,
-      images: urlEntry.brandingImage ? [urlEntry.brandingImage] : [],
+      images: urlEntry.brandingImage
+        ? [urlEntry.brandingImage]
+        : [DEFAULT_PREVIEW_IMAGE],
     },
   };
 }
-
 
 export default async function Page({
   params,
@@ -54,10 +57,12 @@ export default async function Page({
     notFound();
   }
 
-  //  bot stuff 
+  //  bot stuff
   const headerList = await headers();
   const userAgent = headerList.get("user-agent") || "";
-  const isBot = /bot|facebook|twitter|whatsapp|telegram|slack|discord/i.test(userAgent);
+  const isBot = /bot|facebook|twitter|whatsapp|telegram|slack|discord/i.test(
+    userAgent,
+  );
 
   // If bot + custom branding = stay on page to show metadata
   if (isBot && urlEntry.brandingTitle) {

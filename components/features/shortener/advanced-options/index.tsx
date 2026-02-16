@@ -188,43 +188,37 @@ export function AdvancedOptions({
                   <div className="h-px w-full bg-linear-to-r from-transparent via-white/5 to-transparent my-2" />
 
                   {/* Branding Section */}
-                  <div className="space-y-4">
-                    <button
-                      type="button"
-                      onClick={() => setShowBranding(!showBranding)}
-                      className="w-full flex items-center justify-between p-4 rounded-2xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] hover:border-white/10 transition-all cursor-pointer group"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div
-                          className={cn(
-                            "w-8 h-8 rounded-xl flex items-center justify-center transition-colors",
-                            showBranding
-                              ? "bg-accent/20 text-accent"
-                              : "bg-white/5 text-text-muted",
-                          )}
-                        >
-                          <Share2 size={16} />
-                        </div>
-                        <div className="text-left">
-                          <h3 className="text-xs font-bold text-text-base uppercase tracking-wider">
-                            Link Branding
-                          </h3>
-                          <p className="text-[10px] text-text-muted/40">
-                            Customize how your link looks on social media
-                          </p>
-                        </div>
-                      </div>
-                      <div
+                  <div className="space-y-4 pt-2">
+                    <div className="flex justify-center">
+                      <button
+                        type="button"
+                        onClick={() => setShowBranding(!showBranding)}
                         className={cn(
-                          "text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border transition-all",
+                          "group flex items-center gap-2 px-5 py-2.5 rounded-full text-[10px] font-bold tracking-widest transition-all cursor-pointer",
                           showBranding
-                            ? "bg-accent/10 border-accent/20 text-accent"
-                            : "bg-white/5 border-white/10 text-text-muted/40 group-hover:text-text-muted",
+                            ? "text-text-base bg-white/5"
+                            : "text-text-muted hover:text-text-base hover:bg-white/5",
                         )}
                       >
-                        {showBranding ? "Active" : "Add"}
-                      </div>
-                    </button>
+                        <Share2
+                          size={14}
+                          className={cn(
+                            "transition-all duration-700",
+                            showBranding
+                              ? "rotate-[360deg] "
+                              : "group-hover:rotate-45 ",
+                          )}
+                        />
+                        <span>Link Branding</span>
+                        <ChevronDown
+                          size={14}
+                          className={cn(
+                            "transition-transform duration-300 opacity-50",
+                            showBranding && "rotate-180 opacity-100",
+                          )}
+                        />
+                      </button>
+                    </div>
 
                     <AnimatePresence>
                       {showBranding && (

@@ -69,6 +69,7 @@ export const BrandingOptions = ({
               type="text"
               value={imageUrl}
               onChange={(e) => setImageUrl(e.target.value)}
+              maxLength={2}
               placeholder="https://example.com/image.png"
               className="bg-transparent outline-none w-full text-text-base text-xs font-mono placeholder:text-text-muted/20"
             />
