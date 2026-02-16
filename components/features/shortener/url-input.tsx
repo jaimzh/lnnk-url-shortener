@@ -37,6 +37,7 @@ export default function UrlInput() {
   const [customAlias, setCustomAlias] = useState("");
   const [randomFlavor, setRandomFlavor] = useState<RandomFlavor>("text");
   const [randomPreview, setRandomPreview] = useState("");
+  const [visibility, setVisibility] = useState<"public" | "private">("public");
 
   const handleRegenerateRandom = () => {
     setRandomPreview(generateRandomAlias(randomFlavor));
@@ -67,6 +68,7 @@ export default function UrlInput() {
     const validation = urlSchema.safeParse({
       url: trimmed,
       alias: alias,
+      visibility: visibility,
     });
 
     if (!validation.success) {
@@ -84,6 +86,7 @@ export default function UrlInput() {
         body: JSON.stringify({
           url: validation.data.url,
           alias: validation.data.alias,
+          visibility: validation.data.visibility,
         }),
       });
 
@@ -104,6 +107,7 @@ export default function UrlInput() {
       setCustomAlias("");
       setRandomFlavor("text");
       setAliasType("random");
+      setVisibility("public");
 
       setRandomPreview(generateRandomAlias("text"));
     } catch (error: any) {
@@ -204,6 +208,8 @@ export default function UrlInput() {
           setRandomFlavor={setRandomFlavor}
           randomPreview={randomPreview}
           onRegenerate={handleRegenerateRandom}
+          visibility={visibility}
+          setVisibility={setVisibility}
         />
         {error && (
           <motion.p

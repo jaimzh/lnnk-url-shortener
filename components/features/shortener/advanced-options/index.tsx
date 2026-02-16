@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { Settings2, ChevronDown } from "lucide-react";
+import { Settings2, ChevronDown, Globe, Lock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ALIAS_STRATEGIES, AliasStrategy, RandomFlavor } from "./constants";
 
@@ -21,6 +21,8 @@ interface AdvancedOptionsProps {
   setRandomFlavor: (flavor: RandomFlavor) => void;
   randomPreview: string;
   onRegenerate: () => void;
+  visibility: "public" | "private";
+  setVisibility: (visibility: "public" | "private") => void;
 }
 
 export function AdvancedOptions({
@@ -34,10 +36,12 @@ export function AdvancedOptions({
   setRandomFlavor,
   randomPreview,
   onRegenerate,
+  visibility,
+  setVisibility,
 }: AdvancedOptionsProps) {
   return (
     <div className="space-y-2 pt-2">
-      {/* Advanced Options Toggle */}
+    
       <div className="flex justify-center">
         <button
           type="button"
@@ -69,7 +73,7 @@ export function AdvancedOptions({
         </button>
       </div>
 
-      {/* Advanced Panel */}
+     
       <AnimatePresence>
         {showAdvanced && (
           <motion.div
@@ -79,7 +83,7 @@ export function AdvancedOptions({
             className="overflow-hidden"
           >
             <div className="pt-2 pb-4">
-              {/* Container for the options - reduced visual weight */}
+            
               <div className="bg-bg-base/30 rounded-3xl p-6 border border-accent/50 backdrop-blur-sm">
                 <div className="max-w-md mx-auto space-y-6">
                   <StrategySelector
@@ -90,7 +94,7 @@ export function AdvancedOptions({
                     }}
                   />
 
-                  {/* Contextual Inputs */}
+               
                   <div className="min-h-[100px]">
                     <AnimatePresence mode="wait">
                       {aliasType === ALIAS_STRATEGIES.RANDOM ? (
@@ -107,6 +111,68 @@ export function AdvancedOptions({
                         />
                       )}
                     </AnimatePresence>
+                  </div>
+
+                 
+                  <div className="flex items-center justify-center gap-10 pt-4">
+                    {[
+                      { id: "public", icon: Globe, label: "Public" },
+                      { id: "private", icon: Lock, label: "Private" },
+                    ].map((option) => (
+                      <button
+                        key={option.id}
+                        type="button"
+                        onClick={() =>
+                          setVisibility(option.id as "public" | "private")
+                        }
+                        className="group flex items-center gap-4 cursor-pointer outline-none"
+                      >
+                        
+                        <div
+                          className={cn(
+                            "relative w-3.5 h-3.5 rounded-full border transition-all duration-500 flex items-center justify-center shrink-0",
+                            visibility === option.id
+                              ? "border-accent/60 bg-accent/10"
+                              : "border-white/10 bg-transparent group-hover:border-white/20",
+                          )}
+                        >
+                          {visibility === option.id && (
+                            <motion.div
+                              layoutId="radio-inner"
+                              className="w-1.5 h-1.5 rounded-full bg-accent"
+                              transition={{
+                                type: "spring",
+                                bounce: 0.2,
+                                duration: 0.6,
+                              }}
+                            />
+                          )}
+                        </div>
+
+                        <div className="flex items-center gap-2.5">
+                          
+                          <option.icon
+                            size={14}
+                            className={cn(
+                              "transition-colors duration-300",
+                              visibility === option.id
+                                ? "text-accent"
+                                : "text-text-muted/40 group-hover:text-text-muted",
+                            )}
+                          />
+                          <span
+                            className={cn(
+                              "text-[10px] font-bold uppercase tracking-[0.2em] transition-colors duration-300",
+                              visibility === option.id
+                                ? "text-text-base"
+                                : "text-text-muted/40 group-hover:text-text-muted",
+                            )}
+                          >
+                            {option.label}
+                          </span>
+                        </div>
+                      </button>
+                    ))}
                   </div>
                 </div>
               </div>

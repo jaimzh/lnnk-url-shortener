@@ -40,13 +40,13 @@ export async function DashboardTable(props: DashboardTableProps) {
   const LIMIT = 6;
   const skip = (currentPage - 1) * LIMIT;
 
-  const urls = await Url.find({})
+  const urls = await Url.find({ visibility: "public" })
     .sort({ createdAt: -1 })
     .skip(skip)
     .limit(LIMIT)
     .lean();
 
-  const totalDocs = await Url.countDocuments();
+  const totalDocs = await Url.countDocuments({ visibility: "public" });
   const totalPages = Math.ceil(totalDocs / LIMIT);
 
   return (

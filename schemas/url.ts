@@ -25,6 +25,7 @@ export const urlSchema = z.object({
     .transform((val) => val.replace(/\s+/g, "-"))
     .optional()
     .or(z.literal("")),
+  visibility: z.enum(["public", "private"]).default("public"),
 });
 
 export type UrlInput = z.infer<typeof urlSchema>;

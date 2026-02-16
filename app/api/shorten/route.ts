@@ -22,11 +22,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { url: originalUrl, alias } = validation.data;
+    const { url: originalUrl, alias, visibility } = validation.data;
+    console.log(
+      `[API] Shortening URL: visibility=${visibility}, alias=${alias}`,
+    );
 
     let shortCode = alias || nanoid(6);
 
-    // If custom alias is provided, check if it already exists
+    
     if (alias) {
       const existing = await Url.findOne({ shortCode: alias });
       if (existing) {
@@ -36,7 +39,7 @@ export async function POST(request: NextRequest) {
         );
       }
     } else {
-      // If no alias, ensures nanoid doesn't collide (very unlikely but good practice)
+     
       let exists = true;
       while (exists) {
         const checkExisting = await Url.findOne({ shortCode });
@@ -51,6 +54,7 @@ export async function POST(request: NextRequest) {
     await Url.create({
       originalUrl,
       shortCode,
+      visibility,
     });
 
     return new Response(
