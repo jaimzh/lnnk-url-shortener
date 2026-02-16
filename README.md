@@ -3,7 +3,7 @@
 A modern, fast, and minimal URL shortener built with Next.js and MongoDB.
 
 ## Live Demo
-
+- [lnnk Official Site](https://lnnk.click/)
 - [Main Instance](https://lnnk.pxxl.click/)
 - [Vercel Mirror](https://lnnkkk.vercel.app/)
 
