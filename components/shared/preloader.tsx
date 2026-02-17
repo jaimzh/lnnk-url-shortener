@@ -7,8 +7,6 @@ export default function Preloader() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // We could wait for the window to load, but for a "premium" feel,
-    // we often use a fixed minimum time to show the animation.
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 2000);
@@ -27,22 +25,6 @@ export default function Preloader() {
           }}
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-bg-dark"
         >
-          {/* Background ambient glow */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <motion.div
-              animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.3, 0.5, 0.3],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent/20 blur-[120px] rounded-full"
-            />
-          </div>
-
           <div className="relative flex flex-col items-center">
             {/* LNNK Text Animation */}
             <div className="flex items-baseline gap-1 mb-8">

@@ -22,12 +22,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { url: originalUrl, alias, visibility, brandingTitle, brandingDescription, brandingImage } = validation.data;
-   
+    const {
+      url: originalUrl,
+      alias,
+      visibility,
+      brandingTitle,
+      brandingDescription,
+      brandingImage,
+    } = validation.data;
 
     let shortCode = alias || nanoid(6);
 
-    
     if (alias) {
       const existing = await Url.findOne({ shortCode: alias });
       if (existing) {
@@ -37,7 +42,6 @@ export async function POST(request: NextRequest) {
         );
       }
     } else {
-     
       let exists = true;
       while (exists) {
         const checkExisting = await Url.findOne({ shortCode });

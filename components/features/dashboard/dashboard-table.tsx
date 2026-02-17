@@ -48,6 +48,7 @@ export async function DashboardTable(props: DashboardTableProps) {
 
   const totalDocs = await Url.countDocuments({ visibility: "public" });
   const totalPages = Math.ceil(totalDocs / LIMIT);
+  
 
   return (
     <div id="dashboard-table" className="w-full flex justify-center py-6">

@@ -21,7 +21,7 @@ export function HeroProvider({ children }: { children: ReactNode }) {
   );
 }
 
-//and we make a custom hook to use the context, this gives it access to the stuff we defined in the provider 
+//and we make a custom hook to use the context, this gives it access to the stuff we defined in the provider
 export function useHeroContext() {
   const context = useContext(HeroContext);
   if (!context) {

@@ -96,7 +96,7 @@ export function AdvancedOptions({
             exit={{ height: 0, opacity: 0 }}
             className="overflow-hidden"
           >
-            <div className="pt-2 pb-4">
+            <div className="pt-2 pb-4  ">
               <div className="bg-bg-base/30 rounded-3xl p-6 border border-accent/50 backdrop-blur-sm">
                 <div className="max-w-md mx-auto space-y-6">
                   <StrategySelector
@@ -125,11 +125,9 @@ export function AdvancedOptions({
                     </AnimatePresence>
                   </div>
 
+                  <div className="h-px w-full bg-linear-to-r from-transparent via-white/5 to-transparent my-2" />
 
-<div className="h-px w-full bg-linear-to-r from-transparent via-white/5 to-transparent my-2" />
-
-
-                  <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 pt-4">
+                  <div className="flex  md:flex-row items-center justify-center gap-4 md:gap-12 pt-4">
                     {[
                       { id: "public", icon: Globe, label: "Public" },
                       { id: "private", icon: Lock, label: "Private" },
