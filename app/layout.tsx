@@ -11,22 +11,29 @@ const ubuntu = Ubuntu({
   variable: "--font-ubuntu",
 });
 
-export const metadata: Metadata = {
+const SITE_INFO = {
   title: "LNNK - Shorten the long",
   description: "Turn long URLs into short, shareable links.",
+  url: "https://lnnk.click",
+  image: "https://lnnk.click/lnnk-wide.png",
+};
+
+export const metadata: Metadata = {
+  title: SITE_INFO.title,
+  description: SITE_INFO.description,
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",
     apple: "/apple-touch-icon.png",
   },
   openGraph: {
-    title: "LNNK - Shorten the long",
-    description: "Turn long URLs into short, shareable links.",
-    url: "https://lnnk.click",
+    title: SITE_INFO.title,
+    description: SITE_INFO.description,
+    url: SITE_INFO.url,
     siteName: "LNNK",
     images: [
       {
-        url: "https://lnnk.click/lnnk-wide.png",
+        url: SITE_INFO.image,
         width: 1200,
         height: 630,
         alt: "LNNK - Link Shortener",
@@ -37,9 +44,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "LNNK - Shorten the long",
-    description: "Turn long URLs into short, shareable links.",
-    images: ["https://lnnk.click/lnnk-wide.png"],
+    title: SITE_INFO.title,
+    description: SITE_INFO.description,
+    images: [SITE_INFO.image],
   },
 };
 
