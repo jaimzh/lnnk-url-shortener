@@ -15,7 +15,7 @@ export default function HeroAnimation() {
       <div className="hint mt-4 text-text-muted/60 text-[10px] uppercase tracking-[0.3em] font-medium transition-colors ">
         {!isHeroShortened && "Ayyy yo that's a"}
       </div>
-      <div className="url-box relative flex items-center justify-center whitespace-nowrap tracking-wide">
+      <h1 className="url-box relative flex items-center justify-center whitespace-nowrap tracking-wide">
         <div className="ambient-glow" aria-hidden="true" />
         <span className="char-lnnk">l</span>
         <span className="char-filler">ooo</span>
@@ -24,7 +24,7 @@ export default function HeroAnimation() {
         <span className="char-lnnk">n</span>
         <span className="char-lnnk">k</span>
         <span className="dot"></span>
-      </div>
+      </h1>
 
       {/* Bottom Logic: Separate elements for different styles */}
       <div className="min-h-6 flex items-center justify-center">

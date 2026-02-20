@@ -3,6 +3,13 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import path from "path";
 import fs from "fs/promises";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "How It Works",
+  description:
+    "Learn how LNNK shortens your URLs, ensures security, and provides lightning-fast redirection.",
+};
 
 export default async function HowItWorks() {
   const filePath = path.join(process.cwd(), "MY_THOUGHTS.md");
