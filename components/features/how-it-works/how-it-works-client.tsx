@@ -48,7 +48,7 @@ export default function HowItWorksClient({
         <div className="inline-flex p-1 bg-bg-base/50 border border-white/5 backdrop-blur-md rounded-2xl">
           <button
             onClick={() => setView("user")}
-            className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-medium transition-all ${
+            className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer ${
               view === "user"
                 ? "bg-accent text-white shadow-lg shadow-accent/25"
                 : "text-text-muted hover:text-text-base hover:bg-white/5"
@@ -60,7 +60,7 @@ export default function HowItWorksClient({
 
           <button
             onClick={() => setView("technical")}
-            className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-medium transition-all ${
+            className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer ${
               view === "technical"
                 ? "bg-accent text-white shadow-lg shadow-accent/25"
                 : "text-text-muted hover:text-text-base hover:bg-white/5"
