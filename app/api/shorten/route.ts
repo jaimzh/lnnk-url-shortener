@@ -1,13 +1,52 @@
 import dbConnect from "@/lib/db";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { nanoid } from "nanoid";
 import { Url } from "@/models/UrlSchema";
 import { urlSchema } from "@/schemas/url";
+import { shortenRateLimit } from "@/lib/ratelimit";
 
 import { getBaseUrl } from "@/lib/server-utils";
 
+
+
+
+export const runtime = "nodejs";
+
+function getClientIp(req: NextRequest) {
+  const forwardedFor = req.headers.get("x-forwarded-for");
+  const realIp = req.headers.get("x-real-ip");
+
+  const ip = forwardedFor?.split(",")[0]?.trim() || realIp?.trim() || "anonymous";
+  
+  console.log("Client IP:", ip); 
+
+  return ip;
+}
+
+
+
 export async function POST(request: NextRequest) {
   const baseUrl = await getBaseUrl();
+
+
+  const ip = getClientIp(request);
+  const identifier = `ip:${ip}`;
+
+  const { success, limit, remaining, reset } = await shortenRateLimit.limit(identifier);
+
+  if (!success) {
+    return NextResponse.json(
+      { error: "Too many requests. Please try again later." },
+      { status: 429 , 
+        headers: {
+          "X-RateLimit-Limit": limit.toString(),
+          "X-RateLimit-Remaining": remaining.toString(),
+          "X-RateLimit-Reset": reset.toString(),
+        },
+      },
+      
+    );
+  }
 
   try {
     await dbConnect();
