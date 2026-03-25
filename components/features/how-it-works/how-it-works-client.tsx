@@ -17,27 +17,20 @@ export default function HowItWorksClient({
 
   const steps = [
     {
-      icon: <Globe className="w-6 h-6 text-accent" />,
-      title: "1. Paste your link",
+      title: "Paste your link",
       description: "Enter any long URL into the input field on the home page.",
     },
     {
-      icon: <Zap className="w-6 h-6 text-accent" />,
-      title: "2. Shorten & Customize",
-      description:
-        "Click shorten or provide a custom alias to make your link unique.",
+      title: "Shorten & Customize",
+      description: "Click shorten or provide a custom alias to make your link unique.",
     },
     {
-      icon: <Shield className="w-6 h-6 text-accent" />,
-      title: "3. Share Securely",
-      description:
-        "Copy your new link and share it anywhere. Your links are safe and fast.",
+      title: "Share Securely",
+      description: "Copy your new link and share it anywhere. Your links are safe and fast.",
     },
     {
-      icon: <BarChart3 className="w-6 h-6 text-accent" />,
-      title: "4. Track Analytics",
-      description:
-        "Monitor your link's performance with real-time click tracking.",
+      title: "Track Analytics",
+      description: "Monitor your link's performance with real-time click tracking.",
     },
   ];
 
@@ -74,27 +67,32 @@ export default function HowItWorksClient({
 
       {/* --- THE CONTENT VIEW --- */}
       {view === "user" ? (
-       
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div className="max-w-3xl mx-auto py-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
           {steps.map((step, idx) => (
-            <div
-              key={idx}
-              className="p-8 rounded-3xl bg-bg-base/30 border border-white/5 backdrop-blur-sm hover:border-accent/20 transition-all group"
-            >
-              <div className="w-12 h-12 rounded-2xl bg-accent/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                {step.icon}
+            <div key={idx} className="flex gap-10 group">
+              {/* Vertical Stepper Column */}
+              <div className="flex flex-col items-center flex-shrink-0 pt-0.5">
+                <div className="w-11 h-11 rounded-full border-2 border-accent/20 bg-accent/10 flex items-center justify-center text-sm font-mono font-black text-accent shadow-[0_0_15px_rgba(var(--accent-rgb),0.1)] group-hover:border-accent/50 group-hover:bg-accent/20 transition-all duration-300">
+                  {idx + 1 < 10 ? `0${idx + 1}` : idx + 1}
+                </div>
+                {idx !== steps.length - 1 && (
+                  <div className="w-[2px] flex-1 bg-gradient-to-b from-accent/30 to-transparent my-3 transition-colors" />
+                )}
               </div>
-              <h3 className="text-xl font-bold text-text-base mb-3 leading-tight">
-                {step.title}
-              </h3>
-              <p className="text-text-muted leading-relaxed font-light text-sm">
-                {step.description}
-              </p>
+
+              {/* Content Column */}
+              <div className={`${idx !== steps.length - 1 ? 'pb-16' : 'pb-0'} pt-1`}>
+                <h3 className="text-xl font-semibold text-text-base mb-3 tracking-tight group-hover:text-accent transition-colors duration-300">
+                  {step.title}
+                </h3>
+                <p className="text-text-muted text-base leading-relaxed font-light max-w-xl">
+                  {step.description}
+                </p>
+              </div>
             </div>
           ))}
         </div>
       ) : (
-        
         <div className="p-8 md:p-12 rounded-[2.5rem] bg-bg-base/30 border border-white/5 backdrop-blur-sm animate-in fade-in slide-in-from-bottom-4 duration-500">
         
 
